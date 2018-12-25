@@ -9,17 +9,24 @@ public class Director : MonoBehaviour
 
     public InputField InputField;
 
-    public Button Button;
+    public Button ButtonOk;
+
+    public Button ButtonQuit;
 
     void Start()
     {
         TextIntro.text = NativeHelper.GetData("native_text");
-        Button.onClick.AddListener(() =>
+        ButtonOk.onClick.AddListener(() =>
         {
             var text = InputField.text;
             NativePrefs.SetString("unity_text", text);
 
             NativeHelper.SendCommand("show_toast", "Successfully!");
+        });
+
+        ButtonQuit.onClick.AddListener(() =>
+        {
+            Application.Quit();
         });
     }
 }
