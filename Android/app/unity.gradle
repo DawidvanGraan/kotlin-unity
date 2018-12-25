@@ -1,0 +1,34 @@
+def unitySourcePath = "../../Exported/Unity"
+
+task cleanUnity(type: Delete) {
+    delete 'libs/unity-classes.jar', 'src/main/jniLibs', 'src/main/assets', 'proguard-unity.txt'
+}
+
+task copyUnityAssets(type: Copy) {
+    from "$unitySourcePath/src/main/assets"
+    into "src/main/assets"
+}
+
+task copyUnityJniLibs(type: Copy) {
+    from "$unitySourcePath/src/main/jniLibs"
+    into "src/main/jniLibs"
+}
+
+task copyUnityLibs(type: Copy) {
+    from "$unitySourcePath/libs"
+    into "libs"
+    include "*.jar"
+}
+
+task copyUnityProguard(type: Copy) {
+    from "$unitySourcePath/proguard-unity.txt"
+    into "."
+}
+
+task copyUnityResources {
+    dependsOn 'cleanUnity'
+    dependsOn 'copyUnityProguard'
+    dependsOn 'copyUnityAssets'
+    dependsOn 'copyUnityJniLibs'
+    dependsOn 'copyUnityLibs'
+}
